@@ -1,5 +1,7 @@
 import useUserApis from '@hooks/apis/useUserApis.mjs';
+import useCustomAxios from '@hooks/useCustomAxios.mjs';
 import { useQuery } from '@tanstack/react-query';
+import useMemberStore from '@zustand/memberStore.mjs';
 
 export const useGetUserInfo = (_id) => {
   const { getMyInfo } = useUserApis();
@@ -27,13 +29,18 @@ export const useGetUserInfo = (_id) => {
 // };
 
 export const useGetMyClassList = () => {
-  const { getMyClassList } = useUserApis();
+  const axios = useCustomAxios();
+  const user = useMemberStore((state) => state.user);
+  const hasPermission = user.type === 'seller';
+  console.log(user.type);
+  console.log(hasPermission);
 
   return useQuery({
-    queryKey: ['seller/products'],
-    queryFn: () => getMyClassList(),
+    queryKey: ['seller', 'products'],
+    queryFn: () => axios.get(`/seller/products`),
     select: (response) => response.data,
     suspense: true,
+    enabled: hasPermission,
   });
 };
 

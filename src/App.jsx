@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 // import { ErrorBoundary } from 'react-error-boundary';
 // import { FallbackComponent } from '@components/error';
 import router from '@routes/routes';
-import Loading from '@components/ui/Loading';
+import { Loading } from '@components/ui/Loading';
 
 const queryClient = new QueryClient();
 

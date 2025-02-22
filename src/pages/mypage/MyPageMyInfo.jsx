@@ -8,6 +8,7 @@ import Text from '@components/ui/Text';
 import Badge from '@components/ui/Badge';
 import Toast from '@components/ui/Toast';
 import DefaultProfile from '@assets/DefaultProfile';
+import useUserApis from '@hooks/apis/useUserApis.mjs';
 
 function MyPageMyInfo() {
   const { _id } = useParams();
@@ -16,13 +17,22 @@ function MyPageMyInfo() {
   const setUserData = useMemberStore((state) => state.setUser);
   const clearUserDataStorage = useMemberStore.persist.clearStorage;
   const [showToast, setShowToast] = useState(false);
+  const { patchRequestRankUp } = useUserApis();
 
   const user = data?.item;
   console.log(user);
+
+  const isValid = user.posts >= 5;
+  console.log(isValid);
+
   const handleLogout = () => {
     setUserData(null);
     clearUserDataStorage();
     setShowToast(true);
+  };
+
+  const handleRankUpRequest = () => {
+    patchRequestRankUp(_id);
   };
 
   //TODO: 토스트 이동 후에 안 뜸
@@ -34,7 +44,7 @@ function MyPageMyInfo() {
           {user.profileImage && user.profileImage.length > 0 ? (
             <S.MyPageProfileImage src={`${import.meta.env.VITE_API_SERVER}/files/${import.meta.env.VITE_CLIENT_ID}/${user.profileImage}`} alt="프로필 이미지" />
           ) : (
-            <DefaultProfile width={71} height={71} stroke="gray" />
+            <DefaultProfile width={71} stroke="gray" />
           )}
           <S.MyPageInfoUser>
             <Text typography="extrabold_l" display="block">
@@ -47,7 +57,9 @@ function MyPageMyInfo() {
           <Text typography="light_s">{user.introduction ? user.introduction : null}</Text>
 
           <S.MyPageInfoButtonWrapper>
-            <SimpleButton>베이킹 마스터로 승급하기</SimpleButton>
+            <SimpleButton onClick={handleRankUpRequest} disabled={isValid ? false : true}>
+              베이킹 마스터로 승급하기
+            </SimpleButton>
 
             <S.MyPageInfoButtonBottom>
               <SimpleButton

@@ -1,8 +1,9 @@
 import Text from '@components/ui/Text';
 import ClassCard from '@components/ui/card/ClassCard';
+import PropTypes from 'prop-types';
+import { useGetMyClassList } from '@hooks/queries/user';
 import { ClassListContent } from '@styles/class/classList.style';
 import { MyPageListAlert } from '@styles/mypage/mypageList.style';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 MyPageClassList.propTypes = {
@@ -11,7 +12,8 @@ MyPageClassList.propTypes = {
   error: PropTypes.string,
 };
 
-function MyPageClassList({ myCreateClass }) {
+function MyPageClassList() {
+  const { data: myCreateClass } = useGetMyClassList();
   const navigate = useNavigate();
 
   const classList = myCreateClass?.item.map((item) => <ClassCard key={item._id} item={item} />);

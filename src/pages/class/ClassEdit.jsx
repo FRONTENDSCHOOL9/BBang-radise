@@ -51,6 +51,8 @@ function ClassEdit() {
 
   const [mainImagesPreview, setMainImagesPreview] = useState('');
   const [detailImagesPreview, setDetailImagesPreview] = useState([]);
+  const [existingDetailImages, setExistingDetailImages] = useState([]);
+
   const toggleModal = useModalStore((state) => state.toggleModal);
   const [toast, setToast] = useState({
     show: false,
@@ -79,6 +81,7 @@ function ClassEdit() {
           address: classInfo.extra.address,
         },
       });
+      setExistingDetailImages(classInfo.extra.detailImages || []);
     }
   }, [classInfo]);
 
@@ -137,9 +140,10 @@ function ClassEdit() {
         const fileRes = await postMultipleFiles(formData.extra.detailImages);
         console.log(detailImages);
         console.log(fileRes);
-        formData.extra.detailImages = fileRes.data.item.map((item) => item);
+        // formData.extra.detailImages = fileRes.data.item.map((item) => item);
+        formData.extra.detailImages = [...existingDetailImages, ...fileRes.data.item];
       } else {
-        delete formData.extra.detailImages;
+        formData.extra.detailImages = existingDetailImages;
       }
       {
         await patchClass(_id, formData);

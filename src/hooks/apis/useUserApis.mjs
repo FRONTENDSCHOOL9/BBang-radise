@@ -48,6 +48,14 @@ const useUserApis = () => {
     return axios.patch(`/users/${_id}`, formData);
   };
 
+  const patchRequestRankUp = (_id) => {
+    return axios.patch(`users/${_id}`, {
+      extra: {
+        confirm: false,
+      },
+    });
+  };
+
   return {
     postSignUp,
     getEmailVerify,
@@ -59,6 +67,7 @@ const useUserApis = () => {
     getMyRecipeBookmarkList,
     getMyJoinList,
     patchMyInfo,
+    patchRequestRankUp,
   };
 };
 

@@ -18,7 +18,6 @@ function Login() {
   const [toast, setToast] = useState({
     show: false,
     message: '',
-    type: '',
   });
 
   // zustand setter 반환
@@ -46,6 +45,7 @@ function Login() {
         _id: res.data.item._id,
         name: res.data.item.name,
         profile: res.data.item.profileImage,
+        type: res.data.item.type,
         token: res.data.item.token,
       });
       setToast({ show: true, message: `${res.data.item.name}님 로그인 되었습니다.` });

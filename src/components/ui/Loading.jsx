@@ -1,5 +1,6 @@
 import Lottie from 'lottie-react';
 import loadingIndicator from '@assets/lottie/loadingIndicator.json';
+import loader from '@assets/lottie/loader.json';
 import styled from 'styled-components';
 
 const LoadingWrapper = styled.div`
@@ -9,7 +10,7 @@ const LoadingWrapper = styled.div`
   height: 100vh;
 `;
 
-function Loading() {
+export function Loading() {
   return (
     <>
       <LoadingWrapper>
@@ -19,4 +20,10 @@ function Loading() {
   );
 }
 
-export default Loading;
+export function Loader() {
+  return (
+    <>
+      <Lottie animationData={loader} aria-labelledby="loading animation" />;
+    </>
+  );
+}

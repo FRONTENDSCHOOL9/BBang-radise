@@ -85,9 +85,15 @@ function Header() {
       <Navigation>
         <li>
           {user ? (
-            <StyledNavLink to={`mypage/${id}`}>
-              <Text typography="display_m">내정보</Text>
-            </StyledNavLink>
+            user.type === 'admin' ? (
+              <StyledNavLink to={`/admin`}>
+                <Text typography="display_m">Admin</Text>
+              </StyledNavLink>
+            ) : (
+              <StyledNavLink to={`mypage/${id}`}>
+                <Text typography="display_m">내정보</Text>
+              </StyledNavLink>
+            )
           ) : (
             <StyledNavLink to="/login">
               <Text typography="display_m">로그인</Text>

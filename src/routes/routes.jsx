@@ -1,5 +1,6 @@
 import Layout from '@components/layout';
 import ErrorPage from '@pages/ErrorPage';
+import Admin from '@pages/admin/Admin';
 import { ClassAdd, ClassDetail, ClassEdit, ClassList, ClassQnAList } from '@pages/class';
 import ClassOrder from '@pages/class/ClassOrder';
 import MainPage from '@pages/home/MainPage';
@@ -114,6 +115,14 @@ const router = createBrowserRouter([
       {
         path: 'signup-alert',
         element: <SignUpWelcome />,
+      },
+      {
+        path: 'admin',
+        element: (
+          <PrivateRoute requiredRole="admin">
+            <Admin />
+          </PrivateRoute>
+        ),
       },
     ],
   },

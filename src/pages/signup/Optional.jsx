@@ -12,9 +12,8 @@ Optional.propTypes = {
 
 function Optional({ onSubmit }) {
   const { register, handleSubmit } = useForm({ mode: 'onChange' });
-  const { formData, setFormData } = useFormStore((state) => ({
+  const { formData } = useFormStore((state) => ({
     formData: state.formData,
-    setFormData: state.setFormData,
   }));
 
   // useEffect(() => {
@@ -36,7 +35,6 @@ function Optional({ onSubmit }) {
     console.log(data);
     const mergedData = { ...formData, ...data };
     onSubmit(mergedData);
-    setFormData(null);
     console.log(mergedData);
   };
 

@@ -9,6 +9,7 @@ import Text from '@components/ui/Text';
 import Toast from '@components/ui/Toast';
 import Required from '@pages/signup/Required';
 import Optional from '@pages/signup/Optional';
+import useFormStore from '@zustand/formStore.mjs';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ function SignUp() {
     message: '',
   });
   const [step, setStep] = useState(0);
+  const setFormData = useFormStore((state) => state.setFormData);
 
   const handleRequiredSubmit = (formData) => {
     setStep(1);
@@ -33,7 +35,8 @@ function SignUp() {
 
   const handleOptionalSubmit = async (formData) => {
     try {
-      formData.type = 'seller';
+      formData.type = 'user';
+      formData.extra = { confirm: true };
       console.log(formData);
 
       if (formData.profileImage.length > 0) {
@@ -46,6 +49,7 @@ function SignUp() {
 
       const res = await postSignUp(formData);
       navigate('/signup-alert', { state: { user: res.data.item } });
+      setFormData(null);
     } catch (err) {
       console.log(err);
       // AxiosError(네트워크 에러-response가 없음, 서버의 4xx, 5xx 응답 상태 코드를 받았을 때-response 있음)

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 DefaultProfile.propTypes = {
   fill: PropTypes.string,
   stroke: PropTypes.string,
-  width: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 function DefaultProfile({ fill, stroke, width }) {
   return (
-    <svg width={width} height={width} viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width={String(width)} height={String(width)} viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M25 12C25 18.6274 19.4036 24 12.5 24C5.59644 24 0 18.6274 0 12C0 5.37258 5.59644 0 12.5 0C19.4036 0 25 5.37258 25 12Z" fill={fill} />
       <path
         fillRule="evenodd"
